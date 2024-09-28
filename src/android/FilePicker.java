@@ -9,24 +9,53 @@ import android.app.Activity;
 import android.net.Uri;
 import android.database.Cursor;
 import android.provider.OpenableColumns;
+import android.Manifest;
+import android.content.pm.PackageManager;
+import androidx.core.app.ActivityCompat;
 
 public class FilePicker extends CordovaPlugin {
 
     private static final int PICK_FILES = 1;
+    private static final int REQUEST_PERMISSIONS = 100;
     private CallbackContext callbackContext;
 
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) {
         if (action.equals("selectFiles")) {
             this.callbackContext = callbackContext;
-            Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-            intent.setType("*/*");
-            intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
-            intent.addCategory(Intent.CATEGORY_OPENABLE);
-            this.cordova.startActivityForResult(this, intent, PICK_FILES);
+            // Check for permissions
+            if (ActivityCompat.checkSelfPermission(cordova.getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE) 
+                != PackageManager.PERMISSION_GRANTED) {
+                // Request permission
+                ActivityCompat.requestPermissions(cordova.getActivity(), 
+                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_PERMISSIONS);
+            } else {
+                // Permission already granted
+                openFilePicker();
+            }
             return true;
         }
         return false;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        if (requestCode == REQUEST_PERMISSIONS) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // Permission granted, open file picker
+                openFilePicker();
+            } else {
+                callbackContext.error("Permission denied to read external storage");
+            }
+        }
+    }
+
+    private void openFilePicker() {
+        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+        intent.setType("*/*");
+        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        this.cordova.startActivityForResult(this, intent, PICK_FILES);
     }
 
     @Override

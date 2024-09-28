@@ -1,23 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
-        id="cordova-plugin-filepicker"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        id="cordova-file-picker-plugin"
         version="1.0.0">
     <name>FilePicker</name>
-    <description>Cordova Plugin to Select Multiple Files and Return Metadata</description>
-    <license>MIT</license>
-    <keywords>cordova, file, picker, metadata</keywords>
+    <description>Cordova Plugin for Selecting Files and Returning Metadata</description>
+    <license>Apache 2.0</license>
+    <keywords>cordova,pickers,file,metadata</keywords>
+    <repo>https://github.com/ksawalha/cordova-file-picker-plugin</repo>
+    <issue>https://github.com/ksawalha/cordova-file-picker-plugin/issues</issue>
 
-    <platform name="android">
-        <config-file target="AndroidManifest.xml" parent="/*">
-            <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-        </config-file>
-        <source-file src="src/android/FilePicker.java" target-dir="src/com/example/filepicker" />
-    </platform>
+    <engines>
+        <engine name="cordova-android" version=">=6.3.0" />
+        <engine name="cordova-ios" version=">=7.0.0" />
+    </engines>
 
+    <js-module src="www/FilePicker.js" name="FilePicker">
+        <clobbers target="window.FilePicker" />
+    </js-module>
+
+    <!-- iOS platform -->
     <platform name="ios">
+        <config-file target="*-Info.plist" parent="NSPhotoLibraryUsageDescription">
+            <string>Need access to the photo library to select files.</string>
+        </config-file>
         <source-file src="FilePicker.swift" framework="true" />
     </platform>
 
-    <js-module src="www/FilePicker.js" name="FilePicker">
-        <clobbers target="cordova.plugins.FilePicker" />
-    </js-module>
+    <!-- Android platform -->
+    <platform name="android">
+        <config-file target="AndroidManifest.xml" parent="/*">
+            <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+            <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+        </config-file>
+        <source-file src="src/android/FilePicker.java" target-dir="src/org/apache/cordova/pickers" />
+    </platform>
 </plugin>

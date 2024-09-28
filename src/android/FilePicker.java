@@ -31,27 +31,29 @@ public class FilePicker extends CordovaPlugin {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == PICK_FILES && resultCode == Activity.RESULT_OK) {
-            JSONArray resultArray = new JSONArray();
-            if (data.getClipData() != null) {
-                int count = data.getClipData().getItemCount();
-                for (int i = 0; i < count; i++) {
-                    Uri fileUri = data.getClipData().getItemAt(i).getUri();
+        if (requestCode == PICK_FILES) {
+            if (resultCode == Activity.RESULT_OK) {
+                JSONArray resultArray = new JSONArray();
+                if (data.getClipData() != null) {
+                    int count = data.getClipData().getItemCount();
+                    for (int i = 0; i < count; i++) {
+                        Uri fileUri = data.getClipData().getItemAt(i).getUri();
+                        JSONObject fileData = getFileMetadata(fileUri);
+                        if (fileData != null) {
+                            resultArray.put(fileData);
+                        }
+                    }
+                } else if (data.getData() != null) {
+                    Uri fileUri = data.getData();
                     JSONObject fileData = getFileMetadata(fileUri);
                     if (fileData != null) {
                         resultArray.put(fileData);
                     }
                 }
-            } else if (data.getData() != null) {
-                Uri fileUri = data.getData();
-                JSONObject fileData = getFileMetadata(fileUri);
-                if (fileData != null) {
-                    resultArray.put(fileData);
-                }
+                callbackContext.success(resultArray);
+            } else {
+                callbackContext.error("File selection canceled");
             }
-            callbackContext.success(resultArray);
-        } else {
-            callbackContext.error("File selection canceled");
         }
     }
 

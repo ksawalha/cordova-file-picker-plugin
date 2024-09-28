@@ -3,7 +3,7 @@
 
 @implementation FilePicker
 
-- (void)pickFiles:(CDVInvokedUrlCommand*)command {
+- (void)selectFiles:(CDVInvokedUrlCommand*)command {
     self.callbackId = command.callbackId;
 
     NSArray *types = @[@"public.data"];
@@ -23,7 +23,7 @@
         NSString *mimeType = [self mimeTypeForPath:url];
         [fileData setObject:filename forKey:@"filename"];
         [fileData setObject:mimeType forKey:@"filemime"];
-        [fileData setObject:[url path] forKey:@"filepath"];
+        [fileData setObject:url.absoluteString forKey:@"filepath"]; // URI to access the file
         [resultArray addObject:fileData];
     }
 
@@ -37,6 +37,11 @@
     NSString *mimeType = (__bridge_transfer NSString *)UTTypeCopyPreferredTagWithClass(UTI, kUTTagClassMIMEType);
     CFRelease(UTI);
     return mimeType ? mimeType : @"application/octet-stream";
+}
+
+- (void)documentPickerWasCancelled:(UIDocumentPickerViewController *)controller {
+    CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"File selection canceled"];
+    [self.commandDelegate sendPluginResult:result callbackId:self.callbackId];
 }
 
 @end

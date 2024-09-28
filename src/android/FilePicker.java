@@ -9,12 +9,6 @@ import android.app.Activity;
 import android.net.Uri;
 import android.database.Cursor;
 import android.provider.OpenableColumns;
-import android.webkit.MimeTypeMap;
-import android.content.ContentResolver;
-import android.content.Context;
-import android.os.Build;
-
-import java.util.ArrayList;
 
 public class FilePicker extends CordovaPlugin {
 
@@ -23,7 +17,7 @@ public class FilePicker extends CordovaPlugin {
 
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) {
-        if (action.equals("pickFiles")) {
+        if (action.equals("selectFiles")) {
             this.callbackContext = callbackContext;
             Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
             intent.setType("*/*");
@@ -43,14 +37,14 @@ public class FilePicker extends CordovaPlugin {
                 int count = data.getClipData().getItemCount();
                 for (int i = 0; i < count; i++) {
                     Uri fileUri = data.getClipData().getItemAt(i).getUri();
-                    JSONObject fileData = getFileData(fileUri);
+                    JSONObject fileData = getFileMetadata(fileUri);
                     if (fileData != null) {
                         resultArray.put(fileData);
                     }
                 }
             } else if (data.getData() != null) {
                 Uri fileUri = data.getData();
-                JSONObject fileData = getFileData(fileUri);
+                JSONObject fileData = getFileMetadata(fileUri);
                 if (fileData != null) {
                     resultArray.put(fileData);
                 }
@@ -61,7 +55,7 @@ public class FilePicker extends CordovaPlugin {
         }
     }
 
-    private JSONObject getFileData(Uri uri) {
+    private JSONObject getFileMetadata(Uri uri) {
         try {
             JSONObject fileData = new JSONObject();
             Cursor cursor = cordova.getActivity().getContentResolver().query(uri, null, null, null, null);

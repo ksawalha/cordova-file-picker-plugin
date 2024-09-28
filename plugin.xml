@@ -24,7 +24,7 @@
         <config-file target="*-Info.plist" parent="NSPhotoLibraryUsageDescription">
             <string>Need access to the photo library to select files.</string>
         </config-file>
-        <source-file src="FilePicker.swift" framework="true" />
+        <source-file src="src/ios/FilePicker.swift" framework="true" />
     </platform>
 
     <!-- Android platform -->

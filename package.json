@@ -1,37 +1,31 @@
 {
-  "name": "cordova-plugin-file-selector",
-  "version": "1.0.0",
-  "description": "A Cordova plugin to allow users to select multiple files from their device and return metadata about the selected files.",
-  "cordova": {
-    "id": "cordova-plugin-file-selector",
-    "platforms": [
-      "android",
-      "ios"
-    ]
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/ksawalha/cordova-plugin-file-selector.git"
-  },
-  "keywords": [
-    "cordova",
-    "file selector",
-    "file picker",
-    "multiple file selection",
-    "ios",
-    "android"
-  ],
-  "engines": [
-    {
-      "name": "cordova",
-      "version": ">=10.0.0"
-    }
-  ],
-  "author": "ksawalha",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/ksawalha/cordova-plugin-file-selector/issues"
-  },
-  "homepage": "https://github.com/ksawalha/cordova-plugin-file-selector",
-  "dependencies": {}
+    "name": "cordova-plugin-filepicker",
+    "version": "1.0.0",
+    "description": "Cordova Plugin to Select Multiple Files and Return Metadata",
+    "main": "www/FilePicker.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": [
+        "cordova",
+        "plugin",
+        "file",
+        "picker",
+        "metadata"
+    ],
+    "author": "ksawalha",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/ksawalha/cordova-plugin-filepicker.git"
+    },
+    "bugs": {
+        "url": "https://github.com/ksawalha/cordova-plugin-filepicker/issues"
+    },
+    "homepage": "https://github.com/ksawalha/cordova-plugin-filepicker#readme",
+    "dependencies": {
+        "cordova-android": "^9.0.0",
+        "cordova-ios": "^6.0.0"
+    },
+    "devDependencies": {}
 }

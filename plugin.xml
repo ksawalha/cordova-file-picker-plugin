@@ -1,0 +1,17 @@
+<plugin id="cordova-plugin-file-selector" version="1.0.0" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
+    <name>FileSelector</name>
+    <js-module src="www/fileselector.js" name="FileSelector">
+        <clobbers target="window.FileSelector" />
+    </js-module>
+
+    <platform name="android">
+        <config-file target="AndroidManifest.xml" parent="/*">
+            <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+        </config-file>
+        <source-file src="src/android/FileSelector.java" target-dir="src/com/example/fileselector" />
+    </platform>
+
+    <platform name="ios">
+        <source-file src="src/ios/FileSelector.m" />
+    </platform>
+</plugin>

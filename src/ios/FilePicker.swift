@@ -18,11 +18,11 @@ class FilePicker: CDVPlugin {
 extension FilePicker: UIDocumentPickerDelegate {
     
     func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
-        let resultArray = NSMutableArray()
+        var resultArray = [[String: Any]]()
         
         for url in urls {
             if let fileData = getFileMetadata(from: url) {
-                resultArray.add(fileData)
+                resultArray.append(fileData)
             }
         }
         

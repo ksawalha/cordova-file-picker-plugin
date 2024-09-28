@@ -1,17 +1,25 @@
-<plugin id="cordova-plugin-file-selector" version="1.0.0" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
-    <name>FileSelector</name>
-    <js-module src="www/fileselector.js" name="FileSelector">
-        <clobbers target="window.FileSelector" />
-    </js-module>
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+        id="cordova-file-picker-plugin"
+        version="1.0.0">
 
+    <name>FilePicker</name>
+    <description>A Cordova plugin for picking multiple files</description>
+    <license>MIT</license>
+    <keywords>cordova, file picker, plugin, android, ios</keywords>
+    
     <platform name="android">
-        <config-file target="AndroidManifest.xml" parent="/*">
+        <config-file parent="/*" target="AndroidManifest.xml">
             <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
         </config-file>
-        <source-file src="src/android/FileSelector.java" target-dir="src/com/example/fileselector" />
+        <source-file src="src/android/FilePicker.java" target-dir="src/com/example/filepicker"/>
     </platform>
 
     <platform name="ios">
-        <source-file src="src/ios/FileSelector.m" />
+        <source-file src="src/ios/FilePicker.m" />
     </platform>
+    
+    <js-module src="www/filepicker.js" name="FilePicker">
+        <clobbers target="cordova.plugins.FilePicker" />
+    </js-module>
 </plugin>

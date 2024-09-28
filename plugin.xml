@@ -14,8 +14,7 @@
     </platform>
 
     <platform name="ios">
-        <source-file src="src/ios/FilePicker.m" target-dir="FilePicker" />
-        <header-file src="src/ios/FilePicker.h" target-dir="FilePicker" />
+        <source-file src="src/ios/FilePicker.swift" />
     </platform>
 
     <js-module src="www/FilePicker.js" name="FilePicker">

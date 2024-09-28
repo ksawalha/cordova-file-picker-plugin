@@ -21,6 +21,4 @@
     <js-module src="www/FilePicker.js" name="FilePicker">
         <clobbers target="cordova.plugins.FilePicker" />
     </js-module>
-
-    <resource-file src="README.md" target="README.md" />
 </plugin>
